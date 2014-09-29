@@ -11,7 +11,7 @@ namespace MASSemanticWeb
     public class SemanticWeb
     {
         private List<SemanticNode> _nodes;
-        private List<SemanticLink> _links;
+        private List<SemanticArc> _arcs;
         public EventHandler OnChange;
         public event EventHandler Change;
 
@@ -25,12 +25,12 @@ namespace MASSemanticWeb
             }
         }
 
-        public List<SemanticLink> Links
+        public List<SemanticArc> Arcs
         {
-            get { return _links; }
+            get { return _arcs; }
             set
             {
-                _links = value;
+                _arcs = value;
                 if (Change != null) Change(this, EventArgs.Empty);
             }
         }
@@ -38,7 +38,7 @@ namespace MASSemanticWeb
         public SemanticWeb()
         {
             Nodes = new List<SemanticNode>();
-            Links = new List<SemanticLink>();
+            Arcs = new List<SemanticArc>();
             
         }
 
@@ -47,17 +47,17 @@ namespace MASSemanticWeb
         public void AddNode(string name, string comment, Point position)
         {
             int width = name.Length<15?name.Length:name.Length%15, height=20*(name.Length/15);
-            SemanticNode node = new SemanticNode(name, comment, position, width, height);
+            SemanticNode node = new SemanticNode(name, comment, position, width, height,0,NodeType.Named);
             node.Change += node_Change;
             Nodes.Add(node);
             Change(this, EventArgs.Empty);
         }
 
-        public void AddLink(string name, string comment, Color color, Bitmap image)
+        public void AddArc(string name, string comment, Color color, Bitmap image)
         {
-            SemanticLink link = new SemanticLink(name, comment, color, image);
-            link.Change += link_Change;
-            Links.Add(link);
+            SemanticArc arc = new SemanticArc(name, comment, color, image);
+            arc.Change += arc_Change;
+            Arcs.Add(arc);
             Change(this, EventArgs.Empty);
         }
 
@@ -77,20 +77,20 @@ namespace MASSemanticWeb
             Nodes.RemoveAt(index);
         }
 
-        public void RemoveLink(SemanticLink link)
+        public void RemoveArc(SemanticArc arc)
         {
-            if (!Links.Contains(link))
+            if (!Arcs.Contains(arc))
                 return;
-            link.Change -= link_Change;
-            Links.Remove(link);
+            arc.Change -= arc_Change;
+            Arcs.Remove(arc);
         }
 
-        public void RemoveLinkAt(int index)
+        public void RemoveArcAt(int index)
         {
-            if (index < 0 || index >= Links.Count)
+            if (index < 0 || index >= Arcs.Count)
                 return;
-            Links[index].Change -= link_Change;
-            Links.RemoveAt(index);
+            Arcs[index].Change -= arc_Change;
+            Arcs.RemoveAt(index);
         }
 
         public void EditNode(SemanticNode node, string name, string comment)
@@ -103,31 +103,31 @@ namespace MASSemanticWeb
                 node.Comment = comment;
         }
 
-        public void EditLink(SemanticLink link, string name, string comment, Color color, Bitmap image)
+        public void EditArc(SemanticArc arc, string name, string comment, Color color, Bitmap image)
         {
-            if (!Links.Contains(link))
+            if (!Arcs.Contains(arc))
                 return;
-            if (!link.Name.ToUpper().Equals(name.ToUpper().Trim()))
-                link.Name = name;
-            if (!link.Comment.ToUpper().Equals(comment.ToUpper().Trim()))
-                link.Comment = comment;
-            link.Color = color;
-            link.Image = image;
+            if (!arc.Name.ToUpper().Equals(name.ToUpper().Trim()))
+                arc.Name = name;
+            if (!arc.Comment.ToUpper().Equals(comment.ToUpper().Trim()))
+                arc.Comment = comment;
+            arc.Color = color;
+            arc.Image = image;
         }
 
-        public void AddLinkForNode(SemanticNode node, SemanticLink link, LinkDirection direction)
+        public void AddArcForNode(SemanticNode node, SemanticArc arc, ArcDirection direction)
         {
-            node.AddLink(direction, link);
+            node.AddArc(direction, arc);
         }
 
-        public void RemoveLinkForNode(SemanticNode node, SemanticLink link, LinkDirection direction)
+        public void RemoveArcForNode(SemanticNode node, SemanticArc arc, ArcDirection direction)
         {
-            node.RemoveLink(direction, link);
+            node.RemoveArc(direction, arc);
         }
 
         #endregion
 
-        void link_Change(object sender, EventArgs e)
+        void arc_Change(object sender, EventArgs e)
         {
 
         }
