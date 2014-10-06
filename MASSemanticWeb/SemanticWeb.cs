@@ -240,5 +240,29 @@ namespace MASSemanticWeb
         {
             
         }
+
+        //TODO загрузка из xml
+        public static SemanticWeb Load(string pathToXMLFile)
+        {
+            return null;
+        }
+
+        //TODO1 импорт из owl
+        public static SemanticWeb Import(string pathToOWLFile)
+        {
+            return null;
+        } 
+
+        //TODO сохранение в xml
+        public void Save(string pathToFile)
+        {
+            
+        }
+
+        //TODO1 сохранение в owl
+        public void Export(string pathToFile)
+        {
+
+        }
     }
 }
