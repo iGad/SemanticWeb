@@ -10,6 +10,7 @@ namespace MASSemanticWeb
 
     public class SemanticWeb
     {
+        //по умолчанию, при создании сем. сети сразу создаем системные узлы и связи
         private List<SemanticNode> _nodes;
         private List<SemanticArc> _arcs;
         public EventHandler OnChange;
@@ -35,11 +36,28 @@ namespace MASSemanticWeb
             }
         }
 
+        public SemanticNode this[int id] {
+            get
+            {
+                return Nodes.Find(node => node.Id == id);
+  
+            } 
+        }
+
+        public List<SemanticNode> this[string name]
+        {
+            get
+            {
+                return Nodes.FindAll(node => node.Name.ToLower() == name.ToLower().Trim());
+            }
+        }
+
         public SemanticWeb()
         {
             Nodes = new List<SemanticNode>();
             Arcs = new List<SemanticArc>();
-            
+            AddNode(0, "#System", "Основная системная вершина", new Point(0, 0));
+            AddArc(0,"is_a", "Связь класс-подкласс", Color.Black, null);
         }
 
         #region Работа с узлами и связями
@@ -47,15 +65,27 @@ namespace MASSemanticWeb
         public void AddNode(string name, string comment, Point position)
         {
             int width = name.Length<15?name.Length:name.Length%15, height=20*(name.Length/15);
-            SemanticNode node = new SemanticNode(name, comment, position, width, height,0,NodeType.Named);
+            SemanticNode node = new SemanticNode(name, comment, position, width, height, 0, NodeType.Named);
             node.Change += node_Change;
             Nodes.Add(node);
             Change(this, EventArgs.Empty);
         }
 
-        public void AddArc(string name, string comment, Color color, Bitmap image)
+        public bool AddNode(int id,string name, string comment, Point position)
         {
-            SemanticArc arc = new SemanticArc(name, comment, color, image);
+            if (Nodes.Find(n => n.Id == id) != null)
+                return false;
+            int width = name.Length < 15 ? name.Length : name.Length % 15, height = 20 * (name.Length / 15);
+            SemanticNode node = new SemanticNode(name, comment, position, width, height, id, NodeType.Named);
+            node.Change += node_Change;
+            Nodes.Add(node);
+            Change(this, EventArgs.Empty);
+            return true;
+        }
+
+        public void AddArc(int id,string name, string comment, Color color, Bitmap image)
+        {
+            SemanticArc arc = new SemanticArc(id, name, comment, color, image);
             arc.Change += arc_Change;
             Arcs.Add(arc);
             Change(this, EventArgs.Empty);
@@ -115,17 +145,84 @@ namespace MASSemanticWeb
             arc.Image = image;
         }
 
-        public void AddArcForNode(SemanticNode node, SemanticArc arc, ArcDirection direction)
+        public void AddArcBetweenNodes(SemanticNode fromNode, SemanticNode toNode, SemanticArc arc,
+                                       bool bothSide)
         {
-            node.AddArc(direction, arc);
-        }
+            if (bothSide)
+            {
+                fromNode.AddArc(ArcDirection.Both, arc, toNode);
+                toNode.AddArc(ArcDirection.Both, arc, fromNode);
+            }
+            else
+            {
 
-        public void RemoveArcForNode(SemanticNode node, SemanticArc arc, ArcDirection direction)
-        {
-            node.RemoveArc(direction, arc);
+                fromNode.AddArc(ArcDirection.Outter, arc, toNode);
+                toNode.AddArc(ArcDirection.Inner, arc, fromNode);
+            }
         }
 
         #endregion
+
+        /// <summary>
+        ///  Метод находит все узлы, из которых выходит дуга в переданный узел. В идеале поиск должен всегда заканчиваться
+        /// узлом #System
+        /// </summary>
+        /// <param name="endNode">Узел, для которого выполняется поиск</param>
+        /// <param name="transitivity"> Учитывать транзитивность</param>
+        /// <returns>Список найденных узлов или null, если в узел не входит ни одна дуга</returns>
+        public List<SemanticNode> GetAllInnerNodes(SemanticNode endNode, bool transitivity)
+        {
+            if (endNode.InArcs.Count == 0)
+                return null;
+            List<SemanticNode> result = new List<SemanticNode>();
+            foreach (SemanticNode innerNode in endNode.InArcs.Keys)
+            {
+                if (!transitivity)
+                    result.Add(innerNode);
+                else
+                {
+                    if (innerNode == Nodes[0])
+                        //системная вершина, с которой связаны все вершины, то же самое что Nodes["#System"]. 
+                        result.Add(innerNode);
+                    else
+                    {
+                        IEnumerable<SemanticNode> temp = GetAllInnerNodes(innerNode, true);
+                        if (temp != null)
+                            result.AddRange(temp);
+
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Метод поиска пересечения между множествами входящих в node1 и node2 вершин
+        /// </summary>
+        /// <param name="node1">Первый узел</param>
+        /// <param name="node2">Второй узел</param>
+        /// <param name="transitivity">Учитывать транзиитивность</param>
+        /// <returns>Список узлов, которые входят в обе множества, в идеале всегда должен содержать узел #System</returns>
+        public List<SemanticNode> Intersect(SemanticNode node1, SemanticNode node2, bool transitivity)
+        {
+            IEnumerable<SemanticNode> set1 = GetAllInnerNodes(node1, transitivity);
+            IEnumerable<SemanticNode> set2 = GetAllInnerNodes(node2, transitivity);
+            return set1.Intersect(set2).ToList();
+        }
+
+        /// <summary>
+        /// Метод объединения двух множеств входящих в node1 и node2 вершин
+        /// </summary>
+        /// <param name="node1">Первый узел</param>
+        /// <param name="node2">Второй узел</param>
+        /// <param name="transitivity">Учитывать транзиитивность</param>
+        /// <returns>Список узлов, которые входят хотя бы в одно множество</returns>
+        public List<SemanticNode> Union(SemanticNode node1, SemanticNode node2, bool transitivity)
+        {
+            IEnumerable<SemanticNode> set1 = GetAllInnerNodes(node1, transitivity);
+            IEnumerable<SemanticNode> set2 = GetAllInnerNodes(node2, transitivity);
+            return set1.Union(set2).ToList();
+        }
 
         void arc_Change(object sender, EventArgs e)
         {
@@ -136,6 +233,8 @@ namespace MASSemanticWeb
         {
 
         }
+
+
 
         public void Draw(Graphics graphics)
         {
