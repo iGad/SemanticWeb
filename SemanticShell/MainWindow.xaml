@@ -22,6 +22,11 @@
                 <TextBlock FontSize="16" TextWrapping="WrapWithOverflow">Добавить cущность</TextBlock>
 
             </Button>
+            <Button Name="ViewAllBtn" Width="100" Background="#FF63FF80" BorderThickness="5" BorderBrush="#FF63FF80" FontSize="14" Foreground="White" Click="ViewAllBtn_Click" >
+                <TextBlock FontSize="16" TextWrapping="WrapWithOverflow">
+                    Показать всю сеть
+                </TextBlock>
+            </Button>
             <Button Name="ReplaceToolBtn" Width="75" BorderBrush="#FFFFBC63" BorderThickness="5" FontSize="14" Click="toolBtn_Click"  Foreground="#FFFFBC63" Background="#FFFFBC63">
                 <Image Source="replace.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" >
                     <Image.RenderTransform>

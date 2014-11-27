@@ -407,5 +407,10 @@ namespace SemanticShell
 
         }
 
+        private void ViewAllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _semanticWeb.Arrange();
+        }
+
     }
 }

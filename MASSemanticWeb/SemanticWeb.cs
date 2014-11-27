@@ -9,7 +9,7 @@ using MASSemanticWeb;
 namespace MASSemanticWeb
 {
 
-    public class SemanticWeb
+    public partial class SemanticWeb
     {
         //по умолчанию, при создании сем. сети сразу создаем системные узлы и связи
         private List<SemanticNode> _nodes;
