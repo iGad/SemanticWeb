@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MASSemanticWeb;
 
 namespace MASSemanticWeb
 {
@@ -15,6 +16,7 @@ namespace MASSemanticWeb
         private List<SemanticArc> _arcs;
         public EventHandler OnChange;
         public event EventHandler Change;
+        public Size FontSize { get; set; }
 
         public List<SemanticNode> Nodes
         {
@@ -22,7 +24,7 @@ namespace MASSemanticWeb
             set
             {
                 _nodes = value;
-                if(Change!=null) Change(this, EventArgs.Empty);
+                if (Change != null) Change(this, EventArgs.Empty);
             }
         }
 
@@ -36,12 +38,13 @@ namespace MASSemanticWeb
             }
         }
 
-        public SemanticNode this[int id] {
+        public SemanticNode this[int id]
+        {
             get
             {
                 return Nodes.Find(node => node.Id == id);
-  
-            } 
+
+            }
         }
 
         public List<SemanticNode> this[string name]
@@ -57,38 +60,61 @@ namespace MASSemanticWeb
             Nodes = new List<SemanticNode>();
             Arcs = new List<SemanticArc>();
             AddNode(0, "#System", "Основная системная вершина", new Point(0, 0));
-            AddArc(0,"is_a", "Связь класс-подкласс", Color.Black, null);
+            AddArc(0, "is_a", "Связь класс-подкласс", Color.Black, null);
+            FontSize = new Size(15,25);
         }
 
         #region Работа с узлами и связями
 
-        public void AddNode(string name, string comment, Point position)
+        public SemanticNode AddNode(string name, string comment, Point position)
         {
-            int width = name.Length<15?name.Length:name.Length%15, height=20*(name.Length/15);
-            SemanticNode node = new SemanticNode(name, comment, position, width, height, 0, NodeType.Named);
-            node.Change += node_Change;
-            Nodes.Add(node);
-            Change(this, EventArgs.Empty);
-        }
-
-        public bool AddNode(int id,string name, string comment, Point position)
-        {
-            if (Nodes.Find(n => n.Id == id) != null)
-                return false;
-            int width = name.Length < 15 ? name.Length : name.Length % 15, height = 20 * (name.Length / 15);
+            int width = name.Length < 15 ? name.Length * FontSize.Width : 15 * FontSize.Width, height = FontSize.Height + FontSize.Height * (name.Length / 15);
+            int id;
+            if (Nodes.Count == 0)
+                id = 0;
+            else
+                id = Nodes.Max(nod => nod.Id) + 1;
             SemanticNode node = new SemanticNode(name, comment, position, width, height, id, NodeType.Named);
             node.Change += node_Change;
             Nodes.Add(node);
-            Change(this, EventArgs.Empty);
+            return node;
+            //  Change(this, EventArgs.Empty);
+        }
+
+        public bool AddNode(int id, string name, string comment, Point position)
+        {
+            if (Nodes.Exists(n => n.Id == id))
+                return false;
+            int width = name.Length < 15 ? name.Length * FontSize.Width : 15*FontSize.Width, height = FontSize.Height + FontSize.Height * (name.Length / 15);
+            SemanticNode node = new SemanticNode(name, comment, position, width, height, id, NodeType.Named);
+            node.Change += node_Change;
+            Nodes.Add(node);
+            //  Change(this, EventArgs.Empty);
             return true;
         }
 
-        public void AddArc(int id,string name, string comment, Color color, Bitmap image)
+        public bool AddArc(int id, string name, string comment, Color color, Bitmap image)
         {
+            if (Arcs.Exists(a => a.Id == id))
+                return false;
             SemanticArc arc = new SemanticArc(id, name, comment, color, image);
             arc.Change += arc_Change;
             Arcs.Add(arc);
-            Change(this, EventArgs.Empty);
+            return true;
+            // Change(this, EventArgs.Empty);
+        }
+
+        public void AddArc(string name, string comment, Color color, Bitmap image)
+        {
+            int id;
+            if (Arcs.Count == 0)
+                id = 0;
+            else
+                id = Arcs.Max(a => a.Id) + 1;
+            SemanticArc arc = new SemanticArc(id, name, comment, color, image);
+            arc.Change += arc_Change;
+            Arcs.Add(arc);
+            // Change(this, EventArgs.Empty);
         }
 
         public void RemoveNode(SemanticNode node)
@@ -238,7 +264,7 @@ namespace MASSemanticWeb
 
         public void Draw(Graphics graphics)
         {
-            
+
         }
 
         //TODO загрузка из xml
@@ -247,16 +273,16 @@ namespace MASSemanticWeb
             return null;
         }
 
-        //TODO1 импорт из owl
+
         public static SemanticWeb Import(string pathToOWLFile)
         {
-            return null;
-        } 
+            return ImportExport.OpenOWLFile(pathToOWLFile);
+        }
 
         //TODO сохранение в xml
         public void Save(string pathToFile)
         {
-            
+
         }
 
         //TODO1 сохранение в owl

@@ -34,6 +34,7 @@ namespace MASSemanticWeb
         private string _name;
         private string _comment;
         public EventHandler OnChange;
+        public bool IsDisplay { get; set; }
         public event EventHandler Change;
         public event EventHandler PositionChange;
         //Так как связь между двумя узлами может быть только одна, исользуем узел как уникальный ключ
@@ -67,7 +68,7 @@ namespace MASSemanticWeb
 
         public Dictionary<SemanticNode, SemanticArc> InArcs
         {
-            get { return _inArcs; }
+            get {  return _inArcs; }
             private set
             {
                 _inArcs = value;
@@ -90,7 +91,7 @@ namespace MASSemanticWeb
             set
             {
                 _position = value;
-                PositionChange(this, EventArgs.Empty);
+                if(PositionChange!=null) PositionChange(this, EventArgs.Empty);
             }
         }
 
@@ -129,7 +130,22 @@ namespace MASSemanticWeb
             _id = id;
             _type = type;
             _sign = NodeSign.None;
-            
+            IsDisplay = false;
+        }
+
+        public SemanticNode(string name, string comment, Point position, int width, int height, int id, NodeType type, bool isDisplay)
+        {
+            _name = name;
+            _comment = comment;
+            _position = position;
+            Width = width;
+            Height = height;
+            _inArcs = new Dictionary<SemanticNode, SemanticArc>();
+            _outArcs = new Dictionary<SemanticNode, SemanticArc>();
+            _id = id;
+            _type = type;
+            _sign = NodeSign.None;
+            IsDisplay = isDisplay;
         }
 
         public SemanticNode(string name, string comment, Point position, int width, int height, int id, NodeType type, NodeSign sign)
@@ -144,7 +160,7 @@ namespace MASSemanticWeb
             _id = id;
             _type = type;
             _sign = sign;
-
+            IsDisplay = false;
         }
 
         public void AddArc(ArcDirection direction, SemanticArc arc, SemanticNode node)
@@ -188,8 +204,9 @@ namespace MASSemanticWeb
         public EventHandler OnChange;
         public event EventHandler Change;
         private Color _color;
-        private Bitmap _image;//изображение, которое будет отображаться на связи
+        private Image _image;//изображение, которое будет отображаться на связи
 
+        #region
         public string Name
         {
             get { return _name; }
@@ -220,7 +237,7 @@ namespace MASSemanticWeb
             }
         }
 
-        public Bitmap Image
+        public Image Image
         {
             get { return _image; }
             set
@@ -234,7 +251,7 @@ namespace MASSemanticWeb
         {
             get { return _id; }
         }
-
+        #endregion
         public SemanticArc(int id, string name, string comment, Color color, Bitmap image)
         {
             this.Comment = comment;
@@ -243,10 +260,6 @@ namespace MASSemanticWeb
             this.Image = image;
             this._id = id;
         }
-
-        public static SemanticArc CreateNew(string name, string comment, Color color, Bitmap image)
-        {
-            return new SemanticArc(name, comment, color, image);
-        }
+        
     }
 }

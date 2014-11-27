@@ -1,8 +1,96 @@
-﻿<Window x:Class="SemanticShell.MainWindow"
+﻿<Window x:Name="window" x:Class="SemanticShell.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        xmlns:d="http://mindfusion.eu/diagramming/wpf"
+        Title="Оболочка семантической сети" Height="600" Width="1097.015" PreviewMouseUp="window_PreviewMouseUp" KeyDown="window_KeyDown" KeyUp="window_KeyUp">
+
+    <Grid Row="0" RowSpan="5" Column="0" ColumnSpan="2">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Name="ToolBar" Background="#FFeaeaea" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
+            <Button Name="EntityToolBtn" Width="100" Background="#FF63FF80" BorderThickness="5" BorderBrush="#FF63FF80" FontSize="14" Foreground="White" Click="EntityToolBtn_Click">
+                <TextBlock FontSize="16" TextWrapping="WrapWithOverflow">Добавить cущность</TextBlock>
+
+            </Button>
+            <Button Name="ReplaceToolBtn" Width="75" BorderBrush="#FFFFBC63" BorderThickness="5" FontSize="14" Click="toolBtn_Click"  Foreground="#FFFFBC63" Background="#FFFFBC63">
+                <Image Source="replace.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Button>
+            <Button Width="75"  Background="#FF6380FF" BorderBrush="#FF6380FF" Content="Связи:" FontSize="20" Foreground="White" />
+        </StackPanel>
+        <Menu Height="30" FontSize="18" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="3" Background="White" >
+            <MenuItem Header="Файл" >
+                <MenuItem Name="CreateMenuItem" Header="Создать"/>
+                <MenuItem Name="OpenMenuItem" Header="Открыть"/>
+                <MenuItem Name="SaveMenuItem" Header="Сохранить"/>
+                <MenuItem Name="ImportMenuItem" Header="Импорт" Click="ImportMenuItem_OnClick"/>
+                <MenuItem Name="ExportMenuItem" Header="Экспорт"/>
+            </MenuItem>
+        </Menu>
+
+        <DockPanel  Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
+            <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                <TreeView>
+                    <TreeViewItem Name="NodesTrv" Header="Сущности">
+
+                    </TreeViewItem>
+                    <TreeViewItem Name="ArcsTrv" Header="Связи"/>
+                    <TreeViewItem Name="ArcsBetweenNodesTrv" Header="Связи между сущностями"/>
+                </TreeView>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="70" DockPanel.Dock="Bottom">
+                <Button Name="AddBtn" FontSize="48" Margin="10,5,10,5" Width="70" VerticalAlignment="Center" Background="#FF63FF80" BorderBrush="#FF63FF80" Click="AddBtn_OnClick">
+                    <TextBlock Text="+" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Center"  />
+                </Button>
+                <Button Name="DeleteBtn" FontSize="60"  Margin="10,5,10,5" Width="70" VerticalAlignment="Center" Background="#FFFF6380" BorderBrush="#FFFF6380" Click="DeleteBtn_OnClick">
+                    <TextBlock Text="-" Margin="0,0,0,15" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                </Button>
+                <Button Name="EditBtn" FontSize="50" Margin="10,5,10,5" Width="70" VerticalAlignment="Center" HorizontalAlignment="Right" Background="#FF6380FF" BorderBrush="#FF6380FF" Click="EditBtn_OnClick">
+                    <TextBlock Text="..." HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <GridSplitter Width="2" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.IsSharedSizeScope="True" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" Background="Black" Foreground="Black"/>
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal"  Grid.Row="2" Grid.RowSpan="2" Grid.Column="2">
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" Name="ScrolVwr"
+                      VerticalScrollBarVisibility="Visible" 
+                      CanContentScroll="True"
+                      Focusable="False" Width="{Binding ActualWidth, ElementName=stackPanel, Mode=OneWay}" MouseWheel="ScrollViewer_MouseWheel_1" ScrollChanged="ScrollViewer_ScrollChanged_1">
+
+                <d:Diagram Name="diagram" AutoScroll="False"
+                           BackBrush="#FFFFFF" Width="{Binding ActualWidth, ElementName=stackPanel, Mode=OneWay}"
+                           GridSizeX="10" GridSizeY="10" ShowGrid="True" AllowDrop="True"
+                           Drop="diagram_Drop" ContainerMargin="0" ControlMouseAction="IgnoreControl"
+                           AllowInplaceEdit="True" InplaceEditAcceptOnEnter="True" AllowLinksRepeat="False" 
+                           AllowSelfLoops="False" AllowUnanchoredLinks="False" Behavior="Modify"
+                            ShapeHandlesStyle="MoveOnly" MouseWheel="diagram_MouseWheel" DoubleClicked="diagram_DoubleClicked" ScrollViewer.HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RightButtonActions="None" NodeTextEdited="diagram_NodeTextEdited" NodeDeleted="diagram_NodeDeleted" LinkDeleting="diagram_LinkDeleting" NodeDeleting="diagram_NodeDeleting">
+                    <d:Diagram.GridPen>
+                        <Pen Brush="#FFDEDEDE" DashCap="Flat" MiterLimit="1"/>
+                    </d:Diagram.GridPen>
+                </d:Diagram>
+
+            </ScrollViewer>
+        </StackPanel>
+
     </Grid>
+
 </Window>

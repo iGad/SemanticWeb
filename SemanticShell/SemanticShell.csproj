@@ -34,8 +34,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MindFusion.Charting.Wpf">
+      <HintPath>..\..\..\..\..\..\Program Files\MindFusion\MindFusion.Wpf Pack (Trial Version)\VS2010 (.NET 4)\MindFusion.Charting.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MindFusion.Common">
+      <HintPath>..\..\..\..\..\..\Program Files\MindFusion\MindFusion.Wpf Pack (Trial Version)\VS2010 (.NET 4)\MindFusion.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="MindFusion.Diagramming.Wpf">
+      <HintPath>..\..\..\..\..\..\Program Files\MindFusion\MindFusion.Wpf Pack (Trial Version)\VS2010 (.NET 4)\MindFusion.Diagramming.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MindFusion.Graphs">
+      <HintPath>..\..\..\..\..\..\Program Files\MindFusion\MindFusion.Wpf Pack (Trial Version)\VS2010 (.NET 4)\MindFusion.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="MindFusion.UI.Wpf">
+      <HintPath>..\..\..\..\..\..\Program Files\MindFusion\MindFusion.Wpf Pack (Trial Version)\VS2010 (.NET 4)\MindFusion.UI.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,6 +74,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddArc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddArc.Designer.cs">
+      <DependentUpon>AddArc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddArcBetweenNodes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddArcBetweenNodes.Designer.cs">
+      <DependentUpon>AddArcBetweenNodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddEntity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEntity.Designer.cs">
+      <DependentUpon>AddEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -80,6 +115,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="AddArc.resx">
+      <DependentUpon>AddArc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddArcBetweenNodes.resx">
+      <DependentUpon>AddArcBetweenNodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddEntity.resx">
+      <DependentUpon>AddEntity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -92,6 +136,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MASSemanticWeb\MASSemanticWeb.csproj">
+      <Project>{c5c27f5d-fa51-47f0-af1b-df5c3212041f}</Project>
+      <Name>MASSemanticWeb</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="replace.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
