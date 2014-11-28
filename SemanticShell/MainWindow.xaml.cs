@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 //using System.Windows.Media;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MASSemanticWeb;
-using Microsoft.Win32;
-
 using MindFusion.Diagramming.Wpf;
 using MindFusion.Diagramming.Wpf.Layout;
+using Button = System.Windows.Controls.Button;
 using Color = System.Drawing.Color;
+using DataFormats = System.Windows.DataFormats;
+using DragDropEffects = System.Windows.DragDropEffects;
+using DragEventArgs = System.Windows.DragEventArgs;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace SemanticShell
 {
@@ -68,9 +75,29 @@ namespace SemanticShell
                                     MessageBoxImage.Error);
                     return;
                 }
+                foreach (var ent in _semanticWeb.Nodes)
+                    ent.PositionChange += EntityOnPositionChange;
                 UpdateControls();
             }
         }
+
+        private void EntityOnPositionChange(object sender, EventArgs eventArgs)
+        {
+            if ((sender as SemanticNode).IsDisplay)
+            {
+                this.Dispatcher.Invoke(delegate
+                    {
+                        SemanticNode entity = sender as SemanticNode;
+                        DiagramNode shape = FindEntityInDiagram(sender as SemanticNode);
+                        if (shape != null)
+                        {
+                            Rect rect = new Rect(entity.Position.X, entity.Position.Y, entity.Width, entity.Height);
+                            shape.SetRect(rect, false);
+                        }
+                    });
+            }
+        }
+
 
         private void UpdateControls()
         {
@@ -109,7 +136,7 @@ namespace SemanticShell
 
         private void ClearToolBar()
         {
-            for (int i = 3; i < ToolBar.Children.Count;i++ )
+            for (int i = 4; i < ToolBar.Children.Count;i++ )
                 ToolBar.Children.RemoveAt(i);
         }
 
@@ -164,10 +191,11 @@ namespace SemanticShell
 
         private void AddArcToDiagram(SemanticNode fromEntity, SemanticNode toEntity, SemanticArc semanticArc)
         {
-            var ent1 = diagram.GetNodeAt(new Point(fromEntity.Position.X, fromEntity.Position.Y));
+            var ent1 = FindEntityInDiagram(fromEntity);//diagram.GetNodeAt(new Point(fromEntity.Position.X, fromEntity.Position.Y));
             if (ent1 == null)
                 return;
-            var ent2 = diagram.GetNodeAt(new Point(toEntity.Position.X, toEntity.Position.Y));
+            var ent2 = FindEntityInDiagram(toEntity);//diagram.GetNodeAt(new Point(toEntity.Position.X, toEntity.Position.Y));
+            
             if (ent2 == null)
                 return;
             var arc = diagram.Factory.CreateDiagramLink(ent1, ent2);
@@ -182,18 +210,29 @@ namespace SemanticShell
 
         }
 
-        private void AddEntityToDiagram(SemanticNode entity, object sender, DragEventArgs e)
-        {            
+        private void AddEntityToDiagramByCoordinates(SemanticNode entity, int x, int y)
+        {
             if (!entity.IsDisplay)
             {
+                entity.Position = new System.Drawing.Point(x, y);
+                AddEntityToDiagram(entity);
+            }
+
+        }
+
+        public void AddEntityToDiagram(SemanticNode entity)
+        {
+            if (!entity.IsDisplay)
+            {
+                if (entity.Position.X < 0 || entity.Position.Y < 0)
+                    return;
                 entity.IsDisplay = true;
-                entity.Position = new System.Drawing.Point((int)Math.Round(e.GetPosition(sender as Diagram).X),
-                                                         (int)Math.Round(e.GetPosition(sender as Diagram).Y));
-                Rect rect = new Rect(entity.Position.X - entity.Width / 2, entity.Position.Y - entity.Height / 2, entity.Width, entity.Height);
+                Rect rect = new Rect(entity.Position.X - entity.Width/2, entity.Position.Y - entity.Height/2,
+                                     entity.Width, entity.Height);
                 var subject = diagram.Factory.CreateShapeNode(rect);
                 //Shapes.RoundRect);
                 subject.Text = entity.Name;
-                subject.Name = entity.Name;
+                subject.Name = entity.Name.Replace('#','s');
                 foreach (SemanticNode ent in entity.InArcs.Keys)
                 {
                     if (ent.IsDisplay)
@@ -206,6 +245,38 @@ namespace SemanticShell
                 }
             }
         }
+
+        private void AddEntityToDiagram(SemanticNode entity, object sender, DragEventArgs e)
+        {
+            entity.Position = new System.Drawing.Point((int)Math.Round(e.GetPosition(sender as Diagram).X),
+                                                      (int)Math.Round(e.GetPosition(sender as Diagram).Y));
+            AddEntityToDiagram(entity);
+        }
+
+        private DiagramNode FindEntityInDiagram(SemanticNode entity)
+        {
+            try
+            {
+                for (int i = 0; i < diagram.Items.Count; i++)
+                {
+                    if (string.Compare(diagram.Items[i].Name, entity.Name.Replace('#', 's'), false) == 0)
+                    {
+                        return diagram.Items[i] as DiagramNode;
+                    }
+                }
+                return null;
+                //ShapeNode result = (ShapeNode)diagram.FindName(entity.Name.Replace('#','s'));
+                //return result;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            
+            
+        }
+        
 
         private void diagram_Drop(object sender, DragEventArgs e)
         {
@@ -409,7 +480,12 @@ namespace SemanticShell
 
         private void ViewAllBtn_Click(object sender, RoutedEventArgs e)
         {
-            _semanticWeb.Arrange();
+            foreach (var ent in _semanticWeb.Nodes)
+            {
+                AddEntityToDiagramByCoordinates(ent, Convert.ToInt32(diagram.ActualWidth / 2),
+                                                        Convert.ToInt32(diagram.ActualHeight / 2));
+            }
+            _semanticWeb.Arrange(Convert.ToInt32(diagram.ActualWidth), Convert.ToInt32(diagram.ActualHeight));
         }
 
     }

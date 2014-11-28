@@ -22,7 +22,7 @@
                 <TextBlock FontSize="16" TextWrapping="WrapWithOverflow">Добавить cущность</TextBlock>
 
             </Button>
-            <Button Name="ViewAllBtn" Width="100" Background="#FF63FF80" BorderThickness="5" BorderBrush="#FF63FF80" FontSize="14" Foreground="White" Click="ViewAllBtn_Click" >
+            <Button Name="ViewAllBtn" Width="100" Background="#FFE877BE" BorderThickness="5" BorderBrush="#FFE877BE" FontSize="14" Foreground="White" Click="ViewAllBtn_Click" >
                 <TextBlock FontSize="16" TextWrapping="WrapWithOverflow">
                     Показать всю сеть
                 </TextBlock>

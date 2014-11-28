@@ -28,9 +28,20 @@ namespace MASSemanticWeb
         None
     }
 
+    public class PositionChangeEventArgs : EventArgs
+    {
+        public Point OldPosiiton { get; private set; }
+        public Point NewPosition { get; private set; }
+        public PositionChangeEventArgs(Point oldPosition, Point newPosition)
+        {
+            OldPosiiton = oldPosition;
+            NewPosition = newPosition;
+        }
+        
+    }
+
     public class SemanticNode
     {
-        //TODO: как расположена система координат?
         private string _name;
         private string _comment;
         public EventHandler OnChange;
@@ -90,8 +101,9 @@ namespace MASSemanticWeb
             get { return _position; }
             set
             {
+                Point old = _position;
                 _position = value;
-                if(PositionChange!=null) PositionChange(this, EventArgs.Empty);
+                if (PositionChange != null) PositionChange(this, new PositionChangeEventArgs(old, value));
             }
         }
 

@@ -53,6 +53,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawThread.cs" />
     <Compile Include="ImportExport.cs" />
     <Compile Include="SemanticNode and Link.cs" />
     <Compile Include="SemanticWeb.cs" />
