@@ -28,8 +28,11 @@ namespace SemanticShell
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const int TOOLS_COUNT_CONST = 4;
+        private const int NON_TOOLS_COUNT_CONST = 3;
         private SemanticWeb _semanticWeb;
         private bool _isDrag, _isCtrlPressed;
+        private List<ToolClass> toolSet = new List<ToolClass>(); 
         private enum TreeViewType
         {
             Entity,
@@ -43,17 +46,22 @@ namespace SemanticShell
         Color.FromArgb(255,96,146),
         Color.FromArgb(156,74,222),
         Color.FromArgb(75,255,222),
-        
-        
         Color.FromArgb(248,106,222),
-        
-        
         Color.FromArgb(99,255,129),
     };
 
         public MainWindow()
         {
             InitializeComponent();
+            for (int i = 0; i < ToolBar.Children.Count; i++)
+            {
+                Button btn = ToolBar.Children[i] as Button;
+                if (btn.Name.IndexOf("ToolBtn", StringComparison.CurrentCultureIgnoreCase) >= 0)
+                {
+                    toolSet.Add(new ToolClass(btn.Name, i));
+                }
+            }
+
             _isDrag = false;
             diagram.DefaultShape = Shapes.Rectangle;
             _isCtrlPressed = false;
@@ -129,18 +137,22 @@ namespace SemanticShell
                 item.Header = _semanticWeb.Arcs[i].Name;
                 item.Tag = _semanticWeb.Arcs[i].Id.ToString();
                 ArcsTrv.Items.Add(item);
-                AddToolToToolbar(_semanticWeb.Arcs[i].Name,null,toolColors[1],toolColors[0]);
+                AddToolToToolbar(_semanticWeb.Arcs[i].Name,null,toolColors[0]);
+                
             }
 
         }
 
         private void ClearToolBar()
         {
-            for (int i = 4; i < ToolBar.Children.Count;i++ )
+            for (int i = TOOLS_COUNT_CONST + NON_TOOLS_COUNT_CONST; i < ToolBar.Children.Count; i++)
+            {
                 ToolBar.Children.RemoveAt(i);
+                toolSet.Remove(toolSet.Find(item => item.ToolIndex == i));
+            }
         }
 
-        private void AddToolToToolbar(string toolName, System.Drawing.Image image, Color color,Color borderColor)
+        private void AddToolToToolbar(string toolName, System.Drawing.Image image, Color borderColor)
         {
             TextBlock tblk = new TextBlock();
             tblk.TextWrapping = TextWrapping.WrapWithOverflow;
@@ -148,7 +160,7 @@ namespace SemanticShell
             Button btn = new Button();
             btn.Width = 75;
             btn.Height = 60;
-            System.Windows.Media.Color nColor = System.Windows.Media.Color.FromRgb(color.R, color.G, color.B);
+            System.Windows.Media.Color nColor = System.Windows.Media.Color.FromRgb(255, 255, 255);
             //if(image == null)
             btn.Background = new SolidColorBrush(nColor);
             btn.BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromRgb(borderColor.R, borderColor.G, borderColor.B));
@@ -158,8 +170,7 @@ namespace SemanticShell
             btn.Name = toolName + "ToolBtn";
             btn.Click += toolBtn_Click;
             ToolBar.Children.Add(btn);
-            //else
-            //    btn.Background = new ImageBrush(new ColorConvertedBitmap());
+            toolSet.Add(new ToolClass(btn.Name, ToolBar.Children.Count - 1));
         }
 
         private void toolBtn_Click(object sender, RoutedEventArgs e)
@@ -188,6 +199,8 @@ namespace SemanticShell
                 _isDrag = true;
             }
         }
+
+#region Работа с графикой
 
         private void AddArcToDiagram(SemanticNode fromEntity, SemanticNode toEntity, SemanticArc semanticArc)
         {
@@ -355,6 +368,62 @@ namespace SemanticShell
             
         }
 
+        private void diagram_NodeTextEdited(object sender, EditNodeTextEventArgs e)
+        {
+            if (_semanticWeb.Nodes.Exists(node => node.Name.ToLower() == e.NewText.Trim().ToLower()))
+            {
+                (sender as ShapeNode).Text = e.OldText;
+                return;
+            }
+            
+            var entities = _semanticWeb[(sender as ShapeNode).Name];
+            if (entities != null)
+            {
+                SemanticNode entity = entities[0];
+                (sender as ShapeNode).Name = e.NewText;
+                entity.Name = e.NewText;
+                UpdateControls();
+            }
+        }
+
+        private void diagram_NodeDeleted(object sender, NodeEventArgs e)
+        {
+            var entities = _semanticWeb[(sender as ShapeNode).Name];
+            if (entities != null)
+            {
+                entities[0].IsDisplay = false;
+            }
+        }
+
+        private void diagram_LinkDeleting(object sender, LinkValidationEventArgs e)
+        {
+            if (
+                MessageBox.Show("Вы уверены, что хотите удалить эту связь?", "", MessageBoxButton.YesNo,
+                                MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                
+            }
+            else
+                e.Cancel = true;
+            
+        }
+
+        private void diagram_NodeDeleting(object sender, NodeValidationEventArgs e)
+        {
+
+        }
+
+        private void ViewAllBtn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var ent in _semanticWeb.Nodes)
+            {
+                AddEntityToDiagramByCoordinates(ent, Convert.ToInt32(diagram.ActualWidth / 2),
+                                                        Convert.ToInt32(diagram.ActualHeight / 2));
+            }
+            _semanticWeb.Arrange(Convert.ToInt32(diagram.ActualWidth), Convert.ToInt32(diagram.ActualHeight));
+        }
+#endregion
+
         private void EntityToolBtn_Click(object sender, RoutedEventArgs e)
         {
             AddEntity window = new AddEntity();
@@ -433,60 +502,7 @@ namespace SemanticShell
         }
 
 
-        private void diagram_NodeTextEdited(object sender, EditNodeTextEventArgs e)
-        {
-            if (_semanticWeb.Nodes.Exists(node => node.Name.ToLower() == e.NewText.Trim().ToLower()))
-            {
-                (sender as ShapeNode).Text = e.OldText;
-                return;
-            }
-            
-            var entities = _semanticWeb[(sender as ShapeNode).Name];
-            if (entities != null)
-            {
-                SemanticNode entity = entities[0];
-                (sender as ShapeNode).Name = e.NewText;
-                entity.Name = e.NewText;
-                UpdateControls();
-            }
-        }
-
-        private void diagram_NodeDeleted(object sender, NodeEventArgs e)
-        {
-            var entities = _semanticWeb[(sender as ShapeNode).Name];
-            if (entities != null)
-            {
-                entities[0].IsDisplay = false;
-            }
-        }
-
-        private void diagram_LinkDeleting(object sender, LinkValidationEventArgs e)
-        {
-            if (
-                MessageBox.Show("Вы уверены, что хотите удалить эту связь?", "", MessageBoxButton.YesNo,
-                                MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                
-            }
-            else
-                e.Cancel = true;
-            
-        }
-
-        private void diagram_NodeDeleting(object sender, NodeValidationEventArgs e)
-        {
-
-        }
-
-        private void ViewAllBtn_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var ent in _semanticWeb.Nodes)
-            {
-                AddEntityToDiagramByCoordinates(ent, Convert.ToInt32(diagram.ActualWidth / 2),
-                                                        Convert.ToInt32(diagram.ActualHeight / 2));
-            }
-            _semanticWeb.Arrange(Convert.ToInt32(diagram.ActualWidth), Convert.ToInt32(diagram.ActualHeight));
-        }
+        
 
     }
 }

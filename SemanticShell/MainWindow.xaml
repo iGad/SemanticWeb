@@ -27,8 +27,11 @@
                     Показать всю сеть
                 </TextBlock>
             </Button>
-            <Button Name="ReplaceToolBtn" Width="75" BorderBrush="#FFFFBC63" BorderThickness="5" FontSize="14" Click="toolBtn_Click"  Foreground="#FFFFBC63" Background="#FFFFBC63">
-                <Image Source="replace.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" >
+            <Button Name="SelectToolBtn" Width="75" Background="#FFFFFF" BorderThickness="5" BorderBrush="#FF94C4FF" FontSize="14" Foreground="White" Click="toolBtn_Click" >
+                <Rectangle Stroke="Black" Width="50" Height="40" StrokeDashOffset="4" StrokeDashArray="4" StrokeDashCap="Square" StrokeLineJoin="Bevel" StrokeMiterLimit="4"/>
+            </Button>
+            <Button Name="ReplaceToolBtn" Width="75" BorderBrush="#FF94C4FF" BorderThickness="5" FontSize="14" Click="toolBtn_Click"  Foreground="White" Background="#FFFFFF">
+                <Image Source="replace.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Width="55" >
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
@@ -38,6 +41,9 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
+            </Button>
+            <Button Name="CursorToolBtn" Width="75" BorderBrush="#FF94C4FF" BorderThickness="5" FontSize="14" Click="toolBtn_Click"  Foreground="White" Background="#FFFFFF">
+                <Image Source="cursor.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Width="55" />
             </Button>
             <Button Width="75"  Background="#FF6380FF" BorderBrush="#FF6380FF" Content="Связи:" FontSize="20" Foreground="White" />
         </StackPanel>
