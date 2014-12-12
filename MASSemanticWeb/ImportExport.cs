@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -12,6 +13,8 @@ namespace MASSemanticWeb
     /// </summary>
     static class ImportExport
     {
+        static StreamWriter log = new StreamWriter("log.txt");
+
         //0. открыть owl
         /// <summary>
         /// Открытие owl файла с СС
@@ -23,6 +26,7 @@ namespace MASSemanticWeb
             SemanticWeb _web=new SemanticWeb();
             //0. Открываем файл как XMl
             XmlTextReader _reader = new XmlTextReader(pathToOWL);
+
             try
             {
                 //1. Разбираем
@@ -51,6 +55,7 @@ namespace MASSemanticWeb
             catch
             {
                 _reader.Close();
+                log.Close();
                 return null;
             }
             //2. PROFIT
@@ -111,6 +116,7 @@ namespace MASSemanticWeb
         /// <param name="web">СС</web>
         private static void ParseProperty(XmlTextReader reader, SemanticWeb web)
         {
+            
             while (reader.Name.ToUpper() != "CLASS")
                 reader.Read();
             SemanticNode _firstNode = web.Nodes.Find(node => node.Name == reader.GetAttribute("URI").Split(';')[1]);
@@ -122,11 +128,12 @@ namespace MASSemanticWeb
             reader.Read();
             SemanticArc _arc;
             SemanticNode _secondNode;
-            while (reader.Name == "")
+            log.Write(_firstNode.Name);
+            while (reader.Name=="")
                 reader.Read();
             //возможно два варианта, либо это is-a, либо другая связь
             //Это другая связь
-            if (reader.Name == "ObjectSomeValuesFrom")
+            if (reader.Name != "Class")
             {
                 reader.Read();
                 while (reader.Name == "")
@@ -147,6 +154,7 @@ namespace MASSemanticWeb
                     _secondNode = web.Nodes.Find(node => node.Name == reader.GetAttribute("URI").Split(';')[1]);
                 }
                 web.AddArcBetweenNodes(_firstNode, _secondNode, _arc, false);
+                log.Write(_secondNode.Name);
             }
             //Это is-a
             else
@@ -159,6 +167,7 @@ namespace MASSemanticWeb
                 }
                 _arc = web.Arcs.Find(arc => arc.Id == 0);
                 web.AddArcBetweenNodes(_secondNode, _firstNode, _arc, false);
+                log.Write(_secondNode.Name);
             }
             reader.Read();
         }

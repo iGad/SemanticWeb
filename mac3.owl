@@ -1,0 +1,718 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema;" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema;" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns;" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl;"
+     xml:base="file:/Users/user/Downloads/MAC"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema;"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema;"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns;"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyURI="file:/Users/user/Downloads/MAC">
+    <Declaration>
+        <Class URI=";3КО"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Автономность_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Активность_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Альтруистический_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Безразличный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Благонамеренный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Гетерогенная_МАС"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Гомогенная_МАС"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Децентрализованный_ИИ"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Динамическое"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Задача"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Злонамеренный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Импульсивный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Интегратор"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Интеллектуальный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Интенциональный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Искусственная_жизнь"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Исполнитель"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Камикадзе_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Коммуникация"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Кооперация"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Координатор"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Координация"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Мультиагентная_система"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Нерешаемая_с_помощью_МАС_задача"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Общительность_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Окружение_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Распределенный_ИИ"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Реактивность_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Реактивный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Рефлекторный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Решаемая_с_помощью_МАС_задача"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Роль_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Роль_с_т.з._3КО"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Самоотверженный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Саморазрушительный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Статическое"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Субординатор"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Тип"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Трофический_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Целенаправленность_агента"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Циничный_агент"/>
+    </Declaration>
+    <Declaration>
+        <Class URI=";Эгоистичный_агент"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty URI=";a_part_of"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty URI=";has"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty URI=";is_instance"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty URI=";property"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual URI=";Анализ_данных_в_интернете"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty URI=";comment"/>
+    </Declaration>
+    <SubClassOf>
+        <Class URI=";3КО"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Автономность_агента"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Агент"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";a_part_of"/>
+            <Class URI=";Мультиагентная_система"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Агент"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty URI=";has"/>
+            <Class URI=";Задача"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Агент"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty URI=";has"/>
+            <Class URI=";Роль_агента"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Активность_агента"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Альтруистический_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Безразличный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Благонамеренный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Гетерогенная_МАС"/>
+        <Class URI=";Мультиагентная_система"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Гомогенная_МАС"/>
+        <Class URI=";Мультиагентная_система"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Децентрализованный_ИИ"/>
+        <Class URI=";Тип"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Динамическое"/>
+        <Class URI=";Окружение_агента"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Динамическое"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";a_part_of"/>
+            <Class URI=";Окружение_агента"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Злонамеренный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Импульсивный_агент"/>
+        <Class URI=";Реактивный_агент"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Интегратор"/>
+        <Class URI=";Роль_с_т.з._3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Интеллектуальный_агент"/>
+        <Class URI=";Агент"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Интенциональный_агент"/>
+        <Class URI=";Интеллектуальный_агент"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Искусственная_жизнь"/>
+        <Class URI=";Тип"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Исполнитель"/>
+        <Class URI=";Роль_с_т.з._3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Камикадзе_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Коммуникация"/>
+        <Class URI=";3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Кооперация"/>
+        <Class URI=";3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Координатор"/>
+        <Class URI=";Роль_с_т.з._3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Координация"/>
+        <Class URI=";3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Мультиагентная_система"/>
+        <ObjectExactCardinality cardinality="1">
+            <ObjectProperty URI=";has"/>
+            <Class URI=";Задача"/>
+        </ObjectExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Нерешаемая_с_помощью_МАС_задача"/>
+        <Class URI=";Задача"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Общительность_агента"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Окружение_агента"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Распределенный_ИИ"/>
+        <Class URI=";Тип"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Реактивность_агента"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Реактивный_агент"/>
+        <Class URI=";Агент"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Рефлекторный_агент"/>
+        <Class URI=";Интеллектуальный_агент"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Решаемая_с_помощью_МАС_задача"/>
+        <Class URI=";Задача"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Решаемая_с_помощью_МАС_задача"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";has"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Роль_с_т.з._3КО"/>
+        <Class URI=";Роль_агента"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+        <Class URI=";Роль_агента"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Самоотверженный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Саморазрушительный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Статическое"/>
+        <Class URI=";Окружение_агента"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Статическое"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";a_part_of"/>
+            <Class URI=";Окружение_агента"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Субординатор"/>
+        <Class URI=";Роль_с_т.з._3КО"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Тип"/>
+        <Class URI=";Мультиагентная_система"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Тип"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";a_part_of"/>
+            <Class URI=";Мультиагентная_система"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Трофический_агент"/>
+        <Class URI=";Реактивный_агент"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Целенаправленность_агента"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty URI=";property"/>
+            <Class URI=";Агент"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Циничный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class URI=";Эгоистичный_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </SubClassOf>
+    <DisjointUnion>
+        <Class URI=";Агент"/>
+        <Class URI=";Интеллектуальный_агент"/>
+        <Class URI=";Реактивный_агент"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Задача"/>
+        <Class URI=";Задача"/>
+        <Class URI=";Нерешаемая_с_помощью_МАС_задача"/>
+        <Class URI=";Решаемая_с_помощью_МАС_задача"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Интеллектуальный_агент"/>
+        <Class URI=";Интеллектуальный_агент"/>
+        <Class URI=";Интенциональный_агент"/>
+        <Class URI=";Рефлекторный_агент"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Мультиагентная_система"/>
+        <Class URI=";Гетерогенная_МАС"/>
+        <Class URI=";Гомогенная_МАС"/>
+        <Class URI=";Мультиагентная_система"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Реактивный_агент"/>
+        <Class URI=";Импульсивный_агент"/>
+        <Class URI=";Реактивный_агент"/>
+        <Class URI=";Трофический_агент"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Роль_агента"/>
+        <Class URI=";Роль_агента"/>
+        <Class URI=";Роль_с_т.з._3КО"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Роль_с_т.з._3КО"/>
+        <Class URI=";Интегратор"/>
+        <Class URI=";Исполнитель"/>
+        <Class URI=";Координатор"/>
+        <Class URI=";Роль_с_т.з._3КО"/>
+        <Class URI=";Субординатор"/>
+    </DisjointUnion>
+    <DisjointUnion>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+        <Class URI=";Альтруистический_агент"/>
+        <Class URI=";Безразличный_агент"/>
+        <Class URI=";Благонамеренный_агент"/>
+        <Class URI=";Злонамеренный_агент"/>
+        <Class URI=";Камикадзе_агент"/>
+        <Class URI=";Роль_с_т.з._отношения_к_другим_агентам"/>
+        <Class URI=";Самоотверженный_агент"/>
+        <Class URI=";Саморазрушительный_агент"/>
+        <Class URI=";Циничный_агент"/>
+        <Class URI=";Эгоистичный_агент"/>
+    </DisjointUnion>
+    <ClassAssertion>
+        <Class URI=";Решаемая_с_помощью_МАС_задача"/>
+        <NamedIndividual URI=";Анализ_данных_в_интернете"/>
+    </ClassAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;3КО</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Принцип координации, кооперации и коммуникации в отношении между агентами</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Автономность_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Относительная независимость от окружающей среды или наличие «свободы воли», обуславливающей собственное поведение.
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Агент – вычислительная система, поставленная в некоторое окружение и способная принимать какие-то действия в этом окружении для того, чтобы достигнуть целей, для которых он был разработан.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Активность_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Cпособность к организации и реализации действий.
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Альтруистический_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе нейтральное, а к другим агентам хорошее</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Безразличный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе и к другим агентам нейтральное</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Благонамеренный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе и к другим агентам хорошее</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Гетерогенная_МАС</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Содержит агенты разных типов</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Гомогенная_МАС</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Содержит агенты одного типа с одинаковыми возможностями</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Децентрализованный_ИИ</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Исследуется деятельность автономного агента в динамической многоагентной среде</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Динамическое</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Меняется со временем</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Задача</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Задание или задача, которая требует решения</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Злонамеренный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе нейтральное, а к другим агентам плохое</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Импульсивный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Импульсивные агенты, также как и трофические, могут иметь примитивный механизм мотивации, толкающий их на выполнение задачи, например, удовлетворение набора жизненных потребностей. Речь идет о поддержании энергетического баланса или, в более широком плане, об условиях выживания агента. Действие механизма самосохранения у агента характеризуется способностями определения и увеличения расстояния границ своего существования. Побуждению к какому-нибудь действию импульсивного агента основывается на таких факторах, как отклонение некоторой жизненно важной переменной (потребности) от нормы и веса (субъективная важность) этой потребности.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Интегратор</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Агент, который сопоставляет результаты работы всех агентов-исполнителей</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Интеллектуальный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Обладает хорошо развитой и пополняемой символьной моделью внешнего мира, что достигается благодаря наличию базы знаний, механизмов решения и анализа действий. 
+У интеллектуального агента обязательно должны присутствовать как минимум четыре функции: когнитивная, рассуждающая (а, в более общем контексте, регулятивная), коммуникативная и ресурсная.
+
+Благодаря богатым внутренним представлениям внешней среды и возможностям рассуждений, интеллектуальные агенты могут запоминать и анализировать различные ситуации, предвидеть возможные реакции на свои действия, делать из этого выводы, полезные для дальнейших действий и, в результате, планировать свое поведение. Именно развитые когнитивные и делиберативные способности позволяют таким агентам строить виртуальные миры, работая в которых они формируют планы действий.
+
+Интеллектуальные агенты имеют индивидуальность и характеризуются целесообразным поведением в сообществе агентов, а также стремлением использовать ресурсы других агентов для достижения собственных целей. 
+
+Данные агенты способны отвечать на вопросы и выполнять задания, которые ставят перед ними другие агенты, но решение этих задач не приводит к появлению у них собственных целей. Типичными примерами таких вырожденных агентов являются системы поиска в базах данных и простейшие логические регуляторы.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Интенциональный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Большинство интеллектуальных агентов можно отнести к числу интенциональных. Подобные агенты наделены собственными механизмами мотивации. Это означает, что в них так или иначе моделируются внутренние убеждения, желания, намерения и мотивы, порождающие цели, которые и определяют их действия.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Искусственная_жизнь</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Исследется и моделируются процессы децентрализованного управения, эволюции, адаптации и кооперации в МАС, состоящей из большого числа реактивных агентов</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Исполнитель</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Агент, который решает свою индивидуальную небольшую задачу</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Камикадзе_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе и к другим агентам плохое</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Коммуникация</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Возможность прямого общения между различными агентами</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Кооперация</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Возможность сотруднечества нескольких агентов для решения задачи</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Координатор</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Агент, который распределяет работу и отбирает требуемые ресурсы для ее успешного выполнения</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Координация</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Свойство, позволяющее координировать действия отдельного агента с действиями остальных агентов</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Мультиагентная_система</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Система, в которой задачи распределены между агентами, каждый из которых рассматривается как член группы или организации. 
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Нерешаемая_с_помощью_МАС_задача</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Задача, которую нельзя или нерационально решать с помощью мультиагентной системы</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Общительность_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Коммуникация с другими объектами для решения совместной задачи.
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Окружение_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">То, что окружает агента</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Распределенный_ИИ</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">МАС образуется для решения задачи. Осуществляется централизованное управление и координация действий нескольких интеллектуальных агентов</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Реактивность_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Способность воспринимать состояние среды.
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Реактивный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Реактивные агенты не имеют ни сколько-нибудь развитого представления внешней среды, ни механизма многошаговых рассуждений, ни достаточного количества собственных ресурсов. 
+
+Реактивные агенты обладают очень ограниченным диапазоном предвидения. Они практически не способны планировать свои действия, поскольку реактивность в чистом виде означает такую структуру обратной связи, которая не содержит механизмов прогноза. 
+
+Реактивные агенты содержат как бы скомпилированные знания о требуемых действиях: им не надо строить подробное внутреннее представление внешней среды, поскольку вполне достаточными оказываются реакции на набор предъявляемых ситуаций, т.е. характер их реакций определяется только текущей информацией.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Рефлекторный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Рефлекторные агенты не имеют внутренних источников мотивации и собственных целей, а их поведение характеризуется простейшими (одношаговыми) выводами или автоматизмами.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Решаемая_с_помощью_МАС_задача</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Задача, которую можно решить с помощью мультиагентной системы</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Роль_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Задание исходных функций агентов и определение круга их обязательств по отношению друг к другу.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Роль_с_т.з._3КО</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Роль агентов с точки зрения принципа 3КО
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Роль_с_т.з._отношения_к_другим_агентам</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Роль агентов с точки зрения их отношения к остальным агентам
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Самоотверженный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе плохое, а к другим агентам хорошее</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Саморазрушительный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе плохое, а к другим агентам нейтральное</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI="MAC;comment"/>
+        <URI>;Статическое</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Не зависит от времени
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Субординатор</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Агент, который проводит  декомпозицию исходной проблемы на отдельные задачи</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Трофический_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Поведение трофических агентов определяется простейшими трофическими связями (типа «кто кого ест»). Фактически оно сводится к ответу на стимулы, поступающие из внешней среды (собственных мотивов и целей нет), т. е. полностью определяется ее локальным состоянием. 
+Типичной моделью подобных агентов являются клеточные автоматы, где основными параметрами выступают: радиус восприятия агента, количество условных единиц питания во внешней среде и энергетическая стоимость единицы. Здесь каждый трофический (по сути, ситуационный) агент обладает небольшим набором ситуационных правил, задающим его реакции на сигналы из среды. Примерами подобных правил служат выражения типа «если в радиусе восприятия есть единица питания, то направиться к ней» или «если в радиусе восприятия не обнаружена единица питания, то случайным образом выбрать один из свободных соседних квадратов и передвинуться в этот квадрат».</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty URI=";comment"/>
+        <URI>;Целенаправленность_агента</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Наличие собственных источников мотивации.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Циничный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе нейтральное, а к другим агентам плохое</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedURI="rdfs:comment"/>
+        <URI>;Эгоистичный_агент</URI>
+        <Literal datatypeURI="&rdf;PlainLiteral">Отношение к себе хорошее, а к другим агентам нейтральное</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

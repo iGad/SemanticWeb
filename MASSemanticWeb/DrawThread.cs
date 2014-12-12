@@ -16,7 +16,7 @@ namespace MASSemanticWeb
         private double _repulsionConstant = 10000;	// charge constant
 
         private double _damping = 0.1;
-        private int _springLength = 100;
+        private int _springLength = 300;
         private int _maxIterations = 500;
         private SemanticWeb _semanticWeb;
         public bool IsAlive { get; private set; }
@@ -60,7 +60,7 @@ namespace MASSemanticWeb
             for (int i = 0; i < _semanticWeb.Nodes.Count; i++)
             {
                 layout[i] = new NodeLayoutInfo(_semanticWeb.Nodes[i], new Vector(), Point.Empty);
-                //layout[i].Node.Position = new Point(rnd.Next(0, Width), rnd.Next(0, Height));
+                layout[i].Node.Position = new Point(rnd.Next(0, 500), rnd.Next(0, 500));
             }
 
             int stopCount = 0;
@@ -81,7 +81,7 @@ namespace MASSemanticWeb
                     // Определяем отталкивание
                     foreach (SemanticNode other in _semanticWeb.Nodes)
                     {
-                        if (other != current.Node) netForce += CalcRepulsionForce(current.Node, other);
+                        if (other.Name != current.Node.Name) netForce += CalcRepulsionForce(current.Node, other);
                     }
 
                     // Опрделяем притяжение
