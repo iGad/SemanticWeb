@@ -58,7 +58,10 @@
         </Menu>
 
         <DockPanel  Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
-            <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+
+            <!--<StackPanel Orientation="Vertical" DockPanel.Dock="Top"> -->
+                <Grid DockPanel.Dock="Top">
+                <ScrollViewer CanContentScroll="True">
                 <TreeView>
                     <TreeViewItem Name="NodesTrv" Header="Сущности">
 
@@ -66,8 +69,10 @@
                     <TreeViewItem Name="ArcsTrv" Header="Связи"/>
                     <TreeViewItem Name="ArcsBetweenNodesTrv" Header="Связи между сущностями"/>
                 </TreeView>
-            </StackPanel>
-
+                </ScrollViewer>
+                </Grid>
+            <!--</StackPanel>-->
+           
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="70" DockPanel.Dock="Bottom">
                 <Button Name="AddBtn" FontSize="48" Margin="10,5,10,5" Width="70" VerticalAlignment="Center" Background="#FF63FF80" BorderBrush="#FF63FF80" Click="AddBtn_OnClick">
                     <TextBlock Text="+" HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Center"  />

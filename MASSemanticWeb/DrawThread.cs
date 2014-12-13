@@ -111,7 +111,7 @@ namespace MASSemanticWeb
                 iterations++;
                 if (totalDisplacement < 10) stopCount++;
                 IsAlive = stopCount <= 15 && iterations <= _maxIterations;
-                Thread.Sleep(2000);
+                Thread.Sleep(2);
             }
 
             // Центрируем сеть

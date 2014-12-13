@@ -245,7 +245,7 @@ namespace SemanticShell
                 var subject = diagram.Factory.CreateShapeNode(rect);
                 //Shapes.RoundRect);
                 subject.Text = entity.Name;
-                subject.Name = entity.Name.Replace('#','s');
+                subject.Name ="_"+ entity.Id.ToString();
                 foreach (SemanticNode ent in entity.InArcs.Keys)
                 {
                     if (ent.IsDisplay)
@@ -272,7 +272,7 @@ namespace SemanticShell
             {
                 for (int i = 0; i < diagram.Items.Count; i++)
                 {
-                    if (string.Compare(diagram.Items[i].Name, entity.Name.Replace('#', 's'), false) == 0)
+                    if (string.Compare(diagram.Items[i].Name, "_"+entity.Id.ToString(), false) == 0)
                     {
                         return diagram.Items[i] as DiagramNode;
                     }
