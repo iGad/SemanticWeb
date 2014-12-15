@@ -177,15 +177,26 @@ namespace SemanticShell
         {
             Button btn = sender as Button;
             string toolName = btn.Name.Remove(btn.Name.LastIndexOf("ToolBtn"));
-            
+            if (toolName.Equals(string.Empty))
+                return;
+            if ((btn.BorderBrush as SolidColorBrush).Color.Equals(System.Windows.Media.Color.FromRgb(0, 0, 0)))
+            {
+                btn.BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromRgb(toolColors[0].R, toolColors[0].G, toolColors[0].B));
+                btn.BorderThickness = new Thickness(5);
+            }
+            else
+            {
+                btn.BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+                btn.BorderThickness = new Thickness(7);
+            }
             switch(toolName.ToLower())
             {
                 case "replace":
-                    btn.BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+                    //btn.BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
                     
                     break;
                 default:
-                    btn.BorderBrush = (btn.BorderBrush as SolidColorBrush).Color.Equals(System.Windows.Media.Color.FromRgb(0, 0, 0)) ? new SolidColorBrush(System.Windows.Media.Color.FromRgb(toolColors[0].R, toolColors[0].G, toolColors[0].B)) : new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0));
+                    
                     break;
             }
         }
@@ -214,7 +225,7 @@ namespace SemanticShell
             var arc = diagram.Factory.CreateDiagramLink(ent1, ent2);
             arc.AllowMoveEnd = false;
             arc.AllowMoveStart = false;
-            arc.Name = fromEntity.Name + semanticArc.Name + toEntity.Name;
+            arc.Name = "arc" + fromEntity.Id.ToString() + "_" + semanticArc.Id.ToString() + "_" + toEntity.Id.ToString();
             arc.Text = semanticArc.Name;
             //var tool = ToolBar.
             arc.Brush =
